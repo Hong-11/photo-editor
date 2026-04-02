@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>应用中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Microsoft YaHei', sans-serif;
+            overflow: hidden;
+        }
+        #bgImage, #bgVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .drawer-trigger {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 100%;
+            z-index: 99;
+        }
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: -100px;
+            width: 100px;
+            height: 100%;
+            background: #fff;
+            border-right: 3px solid #ffd700;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            transition: left 0.3s;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 15px;
+            gap: 15px;
+            overflow-y: auto;
+        }
+        .drawer:hover, .drawer-trigger:hover ~ .drawer, .drawer.open {
+            left: 0;
+        }
+        .drawer-btn {
+            width: 85px;
+            height: 50px;
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            color: #333;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        .drawer-btn:hover {
+            background: #ffd700;
+            border-color: #ffd700;
+            transform: scale(1.02);
+        }
+        .drawer-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+        }
+        .drawer-section label {
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+        }
+        .drawer-slider {
+            width: 80px;
+        }
+        .drawer-label {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #00ff88;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+        .link {
+            display: block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: rgba(0, 170, 255, 0.2);
+            border: 2px solid #00aaff;
+            border-radius: 10px;
+            color: #00aaff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .link:hover {
+            background: rgba(0, 170, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.4);
+            transform: scale(1.02);
+        }
+        #photoLink {
+            background: rgba(255, 170, 0, 0.2);
+            border-color: #ffaa00;
+            color: #ffaa00;
+        }
+        #photoLink:hover {
+            background: rgba(255, 170, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 170, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <img id="bgImage">
+    <video id="bgVideo" autoplay loop muted playsinline></video>
+    
+    <div class="drawer-trigger"></div>
+    <div class="drawer" id="drawer">
+        <button class="drawer-btn" onclick="showBgList()" title="选择背景">🖼️</button>
+        
+        <div class="drawer-section">
+            <button class="drawer-btn" id="audioBtn" onclick="toggleAudio()" title="开启声音">🔇</button>
+        </div>
+        
+        <div class="drawer-section">
+            <span class="drawer-label">透明度</span>
+            <input type="range" class="drawer-slider" id="opacitySlider" min="0" max="100" value="50" oninput="changeOpacity(this.value)">
+            <span class="drawer-label" id="opacityValue">50%</span>
+        </div>
+        
+
+    </div>
+
+    <div class="container">
+        <h1>📦 应用中心</h1>
+        <a class="link" href="http://192.168.3.22:8888/飞机大战.html" target="_blank" onclick="startServer()">
+            ✈️ 飞机大战
+        </a>
+        <a class="link" href="/formal/index.html" target="_blank">
+            📷 证件照编辑器
+        </a>
+    </div>
+
+    <div id="bgModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:9999;align-items:center;justify-content:center;flex-wrap:wrap;gap:15px;padding:50px;overflow:auto;">
+        <button onclick="document.getElementById('bgModal').style.display='none'" style="position:absolute;top:20px;right:20px;padding:10px 20px;background:#ff4444;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:16px;">✕ 关闭</button>
+    </div>
+
+    <script>
+        function startServer() {
+            fetch('http://192.168.3.22:6060/api/start', { method: 'POST' });
+        }
+
+        function changeOpacity(value) {
+            document.getElementById('bgImage').style.opacity = value / 100;
+            document.getElementById('bgVideo').style.opacity = value / 100;
+            document.getElementById('opacityValue').textContent = value + '%';
+            localStorage.setItem('bgOpacity', value);
+        }
+
+        let audioEnabled = false;
+        function toggleAudio() {
+            const video = document.getElementById('bgVideo');
+            const btn = document.getElementById('audioBtn');
+            audioEnabled = !audioEnabled;
+            if (audioEnabled) {
+                video.muted = false;
+                btn.textContent = '🔊';
+                btn.title = '关闭声音';
+            } else {
+                video.muted = true;
+                btn.textContent = '🔇';
+                btn.title = '开启声音';
+            }
+            localStorage.setItem('bgAudio', audioEnabled);
+        }
+
+        async function showBgList() {
+            const modal = document.getElementById('bgModal');
+            modal.innerHTML = '<button onclick="this.parentNode.style.display=\'none\'" style="position:absolute;top:20px;right:20px;padding:10px 20px;background:#ff4444;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:16px;">✕ 关闭</button>';
+            modal.style.display = 'flex';
+            
+            try {
+                const res = await fetch('http://192.168.3.22:6060/api/bg-list');
+                const files = await res.json();
+                
+                for (const file of files) {
+                    const ext = file.split('.').pop().toLowerCase();
+                    const src = 'http://192.168.3.22:6060/bg/' + encodeURIComponent(file);
+                    const div = document.createElement('div');
+                    div.style.cssText = 'width:140px;height:140px;background:#222;border-radius:12px;overflow:hidden;cursor:pointer;border:3px solid transparent;';
+                    div.onclick = function() {
+                        localStorage.setItem('currentBg', file);
+                        loadBgImage();
+                        modal.style.display = 'none';
+                    };
+                    div.onmouseover = function() { this.style.borderColor = '#ffd700'; };
+                    div.onmouseout = function() { this.style.borderColor = 'transparent'; };
+                    
+                    if (['mp4', 'webm', 'ogg'].includes(ext)) {
+                        div.innerHTML = `<video src="${src}" muted loop autoplay style="width:100%;height:100%;object-fit:cover;"></video><div style="position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.6);color:#fff;padding:5px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${file}</div>`;
+                    } else {
+                        div.innerHTML = `<img src="${src}" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;bottom:0;width:100%;background:rgba(0,0,0,0.6);color:#fff;padding:5px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${file}</div>`;
+                    }
+                    div.style.position = 'relative';
+                    modal.appendChild(div);
+                }
+            } catch(e) {}
+        }
+
+        async function loadBgImage() {
+            try {
+                const res = await fetch('http://192.168.3.22:6060/api/bg-list');
+                const files = await res.json();
+                
+                const savedOpacity = localStorage.getItem('bgOpacity') || 50;
+                document.getElementById('opacitySlider').value = savedOpacity;
+                changeOpacity(savedOpacity);
+                
+                const savedAudio = localStorage.getItem('bgAudio') === 'true';
+                if (savedAudio) {
+                    audioEnabled = true;
+                    document.getElementById('audioBtn').textContent = '🔊';
+                    document.getElementById('audioBtn').title = '关闭声音';
+                }
+                
+                const currentBg = localStorage.getItem('currentBg');
+                const filename = currentBg && files.includes(currentBg) ? currentBg : (files && files.length > 0 ? files[0] : null);
+                
+                if (filename) {
+                    const bgImage = document.getElementById('bgImage');
+                    const bgVideo = document.getElementById('bgVideo');
+                    const ext = filename.split('.').pop().toLowerCase();
+                    const src = 'http://192.168.3.22:6060/bg/' + encodeURIComponent(filename);
+                    
+                    if (['mp4', 'webm', 'ogg'].includes(ext)) {
+                        bgImage.style.display = 'none';
+                        bgVideo.src = src;
+                        bgVideo.style.display = 'block';
+                        bgVideo.muted = !audioEnabled;
+                    } else {
+                        bgVideo.style.display = 'none';
+                        bgImage.src = src;
+                        bgImage.style.display = 'block';
+                    }
+                }
+            } catch(e) {}
+        }
+        
+        loadBgImage();
+    </script>
+</body>
+</html>
