@@ -57,14 +57,14 @@ python -m SimpleHTTPServer 6060
 
 ```
 photo-editor/
-├── index.html          # 应用中心（入口页面）
+├── Center.html         ← 应用中心入口
+├── Photo.html          ← 证件照编辑器备份
 ├── server/
-│   └── server.js       # Node.js服务器
+│   └── server.js       ← Node.js服务器
 ├── formal/
-│   └── index.html      # 证件照编辑器
-├── game/
-│   └── 飞机大战.html    # 飞机大战游戏
-└── bg/                 # 背景素材
+│   └── index.html      ← 证件照编辑器（主版本）
+└── game/
+    └── Game.html       ← 飞机大战游戏
 ```
 
 ## 📖 使用说明

@@ -148,7 +148,7 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    let filePath = req.url === '/' ? '/index.html' : decodeURIComponent(req.url);
+    let filePath = req.url === '/' ? '/Center.html' : decodeURIComponent(req.url);
     let fullPath = STATIC_DIR + filePath;
     
     if (!fs.existsSync(fullPath)) {
