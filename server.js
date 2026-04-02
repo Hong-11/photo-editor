@@ -7,12 +7,12 @@ const url = require('url');
 
 const PORT = 6050;
 const GAME_PORT = 8888;
-const STATIC_DIR = '/vol1/1000/open/sj';
-const STATIC_DIR_PHOTO = '/vol1/1000/open/sj/formal';
-const STATIC_DIR_GAME = '/vol1/1000/open/sj/game';
-const STATIC_DIR_BG = '/vol1/1000/open/sj/bg';
-const STATIC_DIR_MAJIANG = '/vol1/1000/open/sj/majiang';
-const TV_DIR = '/vol1/1000/open/sj/tv';
+const STATIC_DIR = '/vol1/1000/open';
+const STATIC_DIR_PHOTO = '/vol1/1000/open/formal';
+const STATIC_DIR_GAME = '/vol1/1000/open/game';
+const STATIC_DIR_BG = '/vol1/1000/open/bg';
+const STATIC_DIR_MAJIANG = '/vol1/1000/open/majiang';
+const TV_DIR = '/vol1/1000/open/tv';
 
 let gameServerRunning = false;
 

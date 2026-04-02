@@ -9,9 +9,3 @@ Thumbs.db
 *.tmp
 *.bak
 *.log
-
-# 大型媒体文件（根据需要可取消注释）
-# *.mp4
-# *.webm
-# *.avi
-# *.mov
