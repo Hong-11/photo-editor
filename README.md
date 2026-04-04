@@ -18,25 +18,18 @@
 
 ## 🚀 快速开始
 
-### 方法一：直接下载使用
+### 方法一：Windows版（推荐）
 
-1. 点击 [Releases](https://github.com/Hong-11/photo-editor/releases) 下载最新版本
+1. 点击 [Releases](https://github.com/Hong-11/photo-editor/releases) 下载 `photo-editor-v1.0.1-Windows-Portable.exe`
+2. 双击运行，无需安装
+3. 自动打开浏览器，即开即用
+
+### 方法二：网页版（双端通用）
+
+1. 点击 [Releases](https://github.com/Hong-11/photo-editor/releases) 下载 `photo-editor-v1.0.1.zip`
 2. 解压到任意目录
 3. 双击 `index.html` 打开
-
-### 方法二：使用Node.js服务器
-
-```bash
-# 1. 克隆仓库
-git clone https://github.com/Hong-11/photo-editor.git
-cd photo-editor
-
-# 2. 启动服务器
-node server.js
-
-# 3. 打开浏览器访问
-# http://localhost:6050
-```
+4. 支持电脑和手机浏览器使用
 
 ## 📁 项目结构
 
